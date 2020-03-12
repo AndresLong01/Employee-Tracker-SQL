@@ -23,7 +23,7 @@
   1. Make sure to have node and npm installed.
   2. Make sure to run npm i to install all dependencies.
   3. Run the schema and the seed files provided in the database folder to have a starter database to work with.
-  4. Within the folder one must create a .env file with the following text: MY_PASS=<your password> where "<your password>" should be replaced with your local SQL password.
+  4. Within the folder one must create a .env file with the following text: MY_PASS=`<your password>` where `<your password>` should be replaced with your local SQL password.
   5. Run node server.js from the containing folder
     
   # Usage
