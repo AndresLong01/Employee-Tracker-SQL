@@ -3,7 +3,7 @@ const orm = require("./config/orm.js");
 
 //This is solely used for inquirer prompts
 let basicTitles= ["Lead Programmer", "Sales Lead", "Hiring Manager", "Accountant", "Marketing Director"];
-let basicDepartment = ["Engineering", "Sales", "Human Resources", "Accounting", "Marketing"];
+let basicDepartment = ["Engineering", "Human Resources", "Marketing", "Sales", "Accounting"];
 
 console.log(`
 ________________________________________________________________________
@@ -33,8 +33,7 @@ const execute = {
             "Remove Employee",
             "Update Employee Role",
             "Add Department",
-            "Add Role",
-            "Exit"
+            "Add Role"
         ],
         name: "choice"
         }
@@ -68,7 +67,8 @@ const execute = {
                         name: "title"
                     }
                 ]).then((extData)=> {
-                    orm.addEmployee(extData.name, extData.last, extData.title, extData.salary)
+                    let roleID = basicTitles.indexOf(extData.title) +1;
+                    orm.addEmployee(extData.name, extData.last, roleID)
                     execute.begin();
                 });
             }
@@ -96,7 +96,8 @@ const execute = {
                         name: "newRole"
                     }
                 ]).then((roleData) => {
-                    orm.updateRole(roleData.updateRole, roleData.newRole);
+                    let roleID = basicTitles.indexOf(roleData.newRole) +1;
+                    orm.updateRole(roleData.updateRole, roleID);
                     execute.begin();
                 })
             }
@@ -107,7 +108,7 @@ const execute = {
                         name: "newDepartment"
                     }
                 ]).then((manageData) => {
-                    basicDepartment.push(manageData.newDepartment);
+                    basicDepartment.push(manageData.newDepartment)
                     orm.addDepartments(manageData.newDepartment);
                     execute.begin();
                 })
@@ -117,15 +118,23 @@ const execute = {
                     {
                         message: "Name your new Role",
                         name: "newRole"
+                    },
+                    {
+                        message: "What will be the salary for this position?",
+                        name: "salary"
+                    },
+                    {
+                        type: "list",
+                        message: "Which department does this role belong to?",
+                        choices: basicDepartment,
+                        name: "newDep"
                     }
-                ]).then((manageData) => {
-                    basicRole.push(manageData.newRole);
-                    orm.addRoles(manageData.newRole);
+                ]).then((newroleData) => {
+                    basicTitles.push(newroleData.newRole);
+                    let depID = basicDepartment.indexOf(newroleData.newDep) +1;
+                    orm.addRoles(newroleData.newRole, newroleData.salary, depID);
                     execute.begin();
                 })
-            }
-            else if(data.choice === "Exit"){
-                return;
             }
         })
     },
