@@ -1,10 +1,11 @@
 const inquirer = require("inquirer");
 const orm = require("./config/orm.js");
 
-//This is solely used for inquirer prompts
+//This is solely used for inquirer prompts, would refactor to have loops checking for all new departments
 let basicTitles= ["Lead Programmer", "Sales Lead", "Hiring Manager", "Accountant", "Marketing Director"];
 let basicDepartment = ["Engineering", "Human Resources", "Marketing", "Sales", "Accounting"];
 
+//Just a logo, ya kno?
 console.log(`
 ________________________________________________________________________
 |      _)      _)      _)      _)      _)      _)      _)      _)       |
@@ -19,8 +20,10 @@ ________________________________________________________________________
 |     (_      (_      (_      (_      (_      (_      (_      (_        |
 |_______(_______(_______(_______(_______(_______(_______(_______(_______|`)
 
+//Tried to export as an object to manage some functionality elsewhere, this worked fine though
 const execute = {
     begin: function() {
+        //Main Functional List
         inquirer.prompt([
         {
             type: "list",
@@ -33,11 +36,13 @@ const execute = {
             "Remove Employee",
             "Update Employee Role",
             "Add Department",
-            "Add Role"
+            "Add Role",
+            "Exit"
         ],
         name: "choice"
         }
         ]).then((data) => {
+            // Controller for different selections, should do a switch case, next time... Sorryyyy
             if (data.choice === "View All Employees"){
                 orm.viewAll();
                 execute.begin();
@@ -135,6 +140,9 @@ const execute = {
                     orm.addRoles(newroleData.newRole, newroleData.salary, depID);
                     execute.begin();
                 })
+            }
+            else if(data.choice === "Exit"){
+                orm.exit();
             }
         })
     },

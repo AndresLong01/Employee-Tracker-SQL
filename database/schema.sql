@@ -1,3 +1,5 @@
+--Just a nice little old Database
+
 DROP DATABASE IF EXISTS tracker_DB;
 CREATE DATABASE IF NOT EXISTS tracker_DB;
 

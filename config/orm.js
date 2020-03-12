@@ -2,6 +2,7 @@ const connection = require("./connection.js");
 // const functionality = require("../server.js")
 // const inquirer = require("inquirer");
 
+//Wanted to split my issues on different files
 const orm = {
     viewAll: () => {
         let query = `
@@ -84,6 +85,9 @@ const orm = {
             if (err) throw err;
             console.log("\nRole Added.");
         })
+    },
+    exit: () => {
+        connection.end();
     }
 }
 

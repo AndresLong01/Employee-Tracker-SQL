@@ -1,3 +1,4 @@
+-- Main seeding
 USE tracker_DB;
 
 INSERT INTO department (dep_name)
